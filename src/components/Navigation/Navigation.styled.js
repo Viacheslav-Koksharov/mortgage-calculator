@@ -24,7 +24,7 @@ const LinkStyled = styled(NavLink)`
   max-width: ${main.mobile}px;
   display: inline-flex;
   align-items: center;
-  font-size: 25px;
+  font-size: 24px;
   color: #ff6b08;
 
   @media screen and (min-width: ${main.tablet}px) {
