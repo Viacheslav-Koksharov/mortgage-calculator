@@ -1,4 +1,3 @@
-import React from "react";
 import { useState, useContext } from "react";
 import { calcContext } from "../../context/CalcContextProvider.js";
 import {
@@ -12,10 +11,13 @@ import {
 
 const PaymentPlan = () => {
   const { banks, selectedBanks } = useContext(calcContext);
-  const bankInfo = banks.find((item) => item.name === selectedBanks);
   const [initialLoan, setInitialLoan] = useState("");
   const [downPayment, setDownPayment] = useState("");
   const [result, setResult] = useState(null);
+
+  const bankInfo = banks.find((item) => {
+    return selectedBanks ? item.name === selectedBanks.name : null;
+  });
 
   const handleChangeForm = (e) => {
     const { name, value } = e.currentTarget;
@@ -33,8 +35,11 @@ const PaymentPlan = () => {
 
   const calcSubmitForm = (e) => {
     e.preventDefault();
-
-    if (selectedBanks === bankInfo.name) {
+    if (!selectedBanks) {
+      alert("At first create a bank, then select it!");
+      return;
+    }
+    if (selectedBanks.name === bankInfo.name) {
       const i = bankInfo.rate / 12 / 100;
       const period = bankInfo.term * 12;
       const koef =
@@ -43,12 +48,6 @@ const PaymentPlan = () => {
       const result = p * koef;
       setResult(result.toFixed(2));
     }
-    resetForm();
-  };
-
-  const resetForm = () => {
-    setInitialLoan("");
-    setDownPayment("");
   };
 
   return (

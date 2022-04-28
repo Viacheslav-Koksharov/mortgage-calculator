@@ -40,20 +40,19 @@ const DownPayment = styled.input`
 `;
 
 const BtnCalculate = styled.button`
-  display: flex;
-  margin: 0 auto;
   padding: 5px 10px;
-  width: 100 %;
-  height: 35px;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 2.5;
-  background-color: green;
-  border: none;
-  border-radius: 7px;
+  margin: 5px;
+  min-width: 30px;
+  height: 30px;
+  background-color: #ff6b08;
+  box-shadow: 0px 2px 1px rgba(0, 0, 0, 0.2), 0px 1px 1px rgba(0, 0, 0, 0.14),
+    0px 1px 3px rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+
+  &:hover {
+    background-color: #ff6b08;
+    transform: scale(1.1);
+  }
 `;
 
 const RusultField = styled.p`

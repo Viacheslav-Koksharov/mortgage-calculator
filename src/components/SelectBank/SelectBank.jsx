@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { calcContext } from "../../context/CalcContextProvider.js";
 import {
   Title,
@@ -10,14 +10,17 @@ import {
 } from "./SelectBank.styled.js";
 
 const SelectBank = () => {
-  const savedBanks = JSON.parse(localStorage.getItem("banks"));
-  const { selectedBanks, setSelectedBanks } = useContext(calcContext);
+  const { banks, selectedBanks, setSelectedBanks } = useContext(calcContext);
+  const [bankInfo, setBankInfo] = useState("");
+
+  useEffect(() => {
+    setSelectedBanks(bankInfo);
+  }, [bankInfo, setSelectedBanks]);
 
   const renderDetails = (e) => {
-    setSelectedBanks(e.target.value);
+    const info = banks.find((item) => item.name === e.target.value);
+    setBankInfo(info);
   };
-
-  const bankInfo = savedBanks.find((item) => item.name === selectedBanks);
 
   return (
     <>
@@ -27,7 +30,7 @@ const SelectBank = () => {
           Choose a Bank:
           <BankName onChange={renderDetails}>
             <option>choose a bank...</option>
-            {savedBanks.map(({ id, name }) => (
+            {banks.map(({ id, name }) => (
               <option value={name} key={id}>
                 {name}
               </option>
@@ -36,10 +39,10 @@ const SelectBank = () => {
         </LabelStyle>
         {selectedBanks && (
           <ListInfo>
-            <ItemInfo>Interest rate: {bankInfo.rate}%</ItemInfo>
-            <ItemInfo>Maximum loan: $ {bankInfo.loan}</ItemInfo>
-            <ItemInfo>Minimum down payment: $ {bankInfo.payment}</ItemInfo>
-            <ItemInfo>Loan term: {bankInfo.term} years</ItemInfo>
+            <ItemInfo>Interest rate: {selectedBanks.rate}%</ItemInfo>
+            <ItemInfo>Maximum loan: $ {selectedBanks.loan}</ItemInfo>
+            <ItemInfo>Minimum down payment: $ {selectedBanks.payment}</ItemInfo>
+            <ItemInfo>Loan term: {selectedBanks.term} years</ItemInfo>
           </ListInfo>
         )}
       </FormStyle>
